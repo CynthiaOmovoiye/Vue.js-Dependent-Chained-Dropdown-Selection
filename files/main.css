@@ -1,0 +1,28 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: sans-serif;
+}
+body{
+	color: rgba(10,10,10,.7);
+	background-color: rgba(200,200,200,.07);
+}
+.title{
+	text-align: center;
+	margin-bottom: 10px;
+}
+.card{
+	max-width: 440px;
+	padding: 15px;
+	margin: auto;
+	margin-top: 20px;
+	background-color: white;
+	box-shadow: 2px 2px 3px rgba(20,20,20,.6);
+}
+.card-box{
+	margin: 10px 0px;
+}
+.vs__search:focus{
+	color: rgba(20,20,20,.3);
+}

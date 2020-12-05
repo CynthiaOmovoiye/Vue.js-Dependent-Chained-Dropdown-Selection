@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chained Dropdown</title>
+	<link rel="stylesheet" type="text/css" href="files/main.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script type="text/javascript" src="files/json.js"></script>
+	<script type="text/javascript" src="files/app.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-select/3.10.8/vue-select.js" integrity="sha512-U4EVikrI06wvpOhiQ9km3JlHjiNefS03aGAEKjr3hB6qh+C+3cdgiFaWCL9THkqg4nrJ3EgP/aRxh9bpDxYbIg==" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vue-select/3.10.8/vue-select.css" integrity="sha512-bHIocRfiCRcIvzrExk2/NpzkoL+Jh3b0ZL9mGJ2oua7UpeDee8NBuNnRc+fsHTc8NIbIQriTOmGxfgYHSygXTg==" crossorigin="anonymous" />
+</head>
+<body>
+
+
+	<div id="app">
+      <div class="card" v-if="category">
+      	  <h3 class="title">Vue.js Dependent/Chained Dropdown Selection.</h3>
+	      <v-select class="card-box" placeholder="Choose up to 3 books!" box v-model="categorySelected" label="name" :options="category"  @input="catSelected"></v-select>
+	      <v-select :disabled="!categorySelected" class="card-box" placeholder="Choose up to 3 books!" box v-model="subcategorySelected" label="name" :options="subcategory" @input="catSelected"></v-select>
+	      <v-select :disabled="!subcategorySelected || !categorySelected" class="card-box" placeholder="Choose up to 3 books!" box v-model="productsSelected" label="name" :options="products"></v-select>
+      </div>
+
+      	<div class="card">
+      		<p v-if="!categorySelected && !subcategorySelected && !productsSelected">You have selected Nothing!</p>
+      		<p v-else>You have choosen:<br><br></p>
+      		<p v-if="categorySelected">[[categorySelected.name]]</p>
+      		<p v-if="subcategorySelected">[[subcategorySelected.name]]</p>
+      		<p v-if="productsSelected">[[productsSelected.name]]</p>
+      	</div>
+    </div>
+
+
+<script type="text/javascript">
+	Vue.component('v-select', VueSelect.VueSelect);
+	new Vue({
+	  el: '#app',
+	  delimiters: ['[[', ']]'], 
+	  data () {
+	    return {
+	      category: null,
+	      subcategory: null,
+	      products: null,
+	      categorySelected: null,
+	      subcategorySelected: null,
+	      productsSelected: null,
+	    }
+	  },
+	  mounted () {
+	      	this.category = category;
+	      	this.subcategory = subcategory;
+	      	this.products = products;
+	  },
+	  methods: {
+	  	catSelected(argument) {
+	  		if (this.categorySelected != null) {
+	  			this.subcategory = subcategory.filter(e => e.category == this.categorySelected.id)
+	  		}else{this.subcategory = subcategory}
+
+	  		if (this.subcategorySelected != null) {
+	  			this.products = products.filter(e => e.subcategory == this.subcategorySelected.id)
+	  		}else{this.products = products}
+	  		
+	  	},
+	  }
+	})
+</script>
+
+</body>
+</html>
